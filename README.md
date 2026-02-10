@@ -2,6 +2,7 @@
 8:35 AM
 🎯 SOLUCIÓN COMPLETA .NET CORE 8 - ARQUITECTURA ONION + DDD + EF CORE
 Voy a darte TODOS LOS PASOS completos sin omitir nada. Este será un documento extenso y detallado.
+```text
 src/
 ├── `NetEnterprise.sln`
 ├── `NetEnterprise.Api/`
