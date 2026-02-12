@@ -1,6 +1,6 @@
 ﻿using NetEnterprise.Domain.Entities.Security;
 
-namespace NetEnterprise.Api.Services;
+namespace NetEnterprise.Application.Interfaces.Services;
 
 public interface ITokenService
 {

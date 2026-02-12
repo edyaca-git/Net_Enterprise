@@ -1,12 +1,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
-using NetEnterprise.Api;
 using NetEnterprise.Api.Middleware;
-using NetEnterprise.Api.Services;
 using NetEnterprise.Application.DTOs.Branch;
 using NetEnterprise.Application.DTOs.Company;
 using NetEnterprise.Application.DTOs.Country;
@@ -20,8 +16,8 @@ using NetEnterprise.Infrastruture.Persistence;
 using NetEnterprise.Infrastruture.Persistence.Seeders;
 using NetEnterprise.Infrastruture.Repositories;
 using NetEnterprise.Infrastruture.Services;
+using NetEnterprise.Shared.Settings;
 using System.Text;
-using static System.Net.Mime.MediaTypeNames;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,13 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NetEnterprise.Api.Services;
 using NetEnterprise.Application.DTOs.User;
-using NetEnterprise.Application.Interfaces.Repositories;
 using NetEnterprise.Application.Interfaces.Services;
-using NetEnterprise.Domain.Entities.Security;
 using NetEnterprise.Shared.Common;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace NetEnterprise.Api.Controllers;
 
@@ -33,26 +28,6 @@ public class AuthController : ControllerBase
     public async Task<ActionResult<ApiResponse<LoginResponse>>> Login([FromBody] LoginRequest request)
     {
         var response = await _authService.LoginAsync(request);
-
-        if (response.Success && response.Data != null)
-        {
-            // Obtener el usuario para generar el token
-            var user = new Domain.Entities.Security.User
-            {
-                UserId = response.Data.UserId,
-                UserAccount = response.Data.UserAccount,
-                Email = response.Data.Email,
-                Name = response.Data.Name,
-                BranchId = response.Data.BranchId,
-                Role = new Domain.Entities.Security.Role
-                {
-                    RoleCode = response.Data.Role
-                }
-            };
-
-            response.Data.Token = _tokenService.GenerateToken(user);
-        }
-
         return StatusCode(response.StatusCode, response);
     }
 
@@ -64,7 +39,8 @@ public class AuthController : ControllerBase
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<ApiResponse<UserRegisteredResponse>>> Register([FromBody] RegisterUserDto request)
     {
-        request.UserId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "userId")?.Value ?? "1");
+        //request.UserId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "userId")?.Value ?? "1");
+        request.UserId = int.Parse(User.FindFirst("userId")?.Value ?? "1");
         var response = await _authService.RegisterAsync(request);
         return StatusCode(response.StatusCode, response);
     }
@@ -78,13 +54,7 @@ public class AuthController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<ApiResponse<CurrentUserResponse>>> GetCurrentUser()
     {
-        var userIdClaim = User.FindFirst("userId")?.Value;
-
-        if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out var userId))
-        {
-            return Unauthorized();
-        }
-
+        var userId = int.Parse(User.FindFirst("userId")?.Value ?? "0");
         var response = await _authService.GetCurrentUserAsync(userId);
         return StatusCode(response.StatusCode, response);
     }

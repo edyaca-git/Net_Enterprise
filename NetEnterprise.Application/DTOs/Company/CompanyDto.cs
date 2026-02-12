@@ -2,7 +2,8 @@
 
 public class CompanyDto
 {
-    public Guid CompanyId { get; set; }
+    public int CompanyId { get; set; }
+    public Guid CompanyUid { get; set; }
     public string BusinessName { get; set; } = null!;
     public string? Street { get; set; }
     public string? ExteriorNumber { get; set; }

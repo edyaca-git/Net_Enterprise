@@ -1,12 +1,13 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using NetEnterprise.Api.Services;
+using NetEnterprise.Application.Interfaces.Services;
 using NetEnterprise.Domain.Entities.Security;
+using NetEnterprise.Shared.Settings;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace NetEnterprise.Api;
+namespace NetEnterprise.Application.Services;
 
 public class TokenService : ITokenService
 {

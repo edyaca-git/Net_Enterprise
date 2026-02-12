@@ -2,8 +2,9 @@
 
 public class BranchDto
 {
-    public Guid BranchId { get; set; }
-    public Guid CompanyId { get; set; }
+    public int BranchId { get; set; }
+    public Guid BranchUid { get; set; }
+    public int CompanyId { get; set; }
     public string Name { get; set; } = null!;
     public string? CommercialName { get; set; }
     public string AddressLine1 { get; set; } = null!;

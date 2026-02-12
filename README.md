@@ -1,5 +1,4 @@
 
-8:35 AM
 🎯 SOLUCIÓN COMPLETA .NET CORE 8 - ARQUITECTURA ONION + DDD + EF CORE
 Voy a darte TODOS LOS PASOS completos sin omitir nada. Este será un documento extenso y detallado.
 ```text
@@ -9,14 +8,10 @@ src/
 │   ├── `NetEnterprise.Api.csproj`
 │   ├── `Program.cs`
 │   ├── `appsettings.json`
-│   ├── `JwtSettings.cs`
 │   ├── `Properties/`
 │   │   └── `launchSettings.json`
 │   ├── `Middleware/`
 │   │   └── `ExceptionMiddleware.cs`
-│   ├── `Services/`
-│   │   ├── `ITokenService.cs`
-│   │   └── `TokenService.cs`
 │   └── `Controllers/`
 │       ├── `AuthController.cs`
 │       ├── `GenericController.cs`
@@ -32,7 +27,8 @@ src/
 │   │   ├── `Services/`
 │   │   │   ├── `IAuthService.cs`
 │   │   │   ├── `IGenericService.cs`
-│   │   │   └── `IPasswordHasher.cs`
+│   │   │   ├── `IPasswordHasher.cs`
+│   │   │   └── `ITokenService.cs`
 │   │   └── `Repositories/`
 │   │       ├── `IGenericRepository.cs`
 │   │       ├── `ICountryRepository.cs`
@@ -44,7 +40,8 @@ src/
 │   │   ├── `AuthService.cs`
 │   │   ├── `GenericService.cs`
 │   │   ├── `CountryService.cs`
-│   │   └── `CompanyService.cs`
+│   │   ├── `CompanyService.cs`
+│   │   └── `TokenService.cs`
 │   └── `DTOs/`
 │       ├── `User/`
 │       │   ├── `RegisterUserDto.cs`
@@ -56,26 +53,30 @@ src/
 │       │   ├── `CountryDto.cs`
 │       │   ├── `CreateCountryDto.cs`
 │       │   └── `UpdateCountryDto.cs`
+│       ├── `Role/`
+│       │   ├── `RoleDto.cs`
+│       │   ├── `CreateRoleDto.cs`
+│       │   └── `UpdateRoleDto.cs`
 │       ├── `Company/`
 │       │   ├── `CompanyDto.cs`
 │       │   ├── `CreateCompanyDto.cs`
 │       │   └── `UpdateCompanyDto.cs`
-│       ├── `Branch/`
-│       │   ├── `BranchDto.cs`
-│       │   ├── `CreateBranchDto.cs`
-│       │   └── `UpdateBranchDto.cs`
-│       └── `Role/`
-│           ├── `RoleDto.cs`
-│           ├── `CreateRoleDto.cs`
-│           └── `UpdateRoleDto.cs`
+│       └── `Branch/`
+│           ├── `BranchDto.cs`
+│           ├── `CreateBranchDto.cs`
+│           └── `UpdateBranchDto.cs`
 │
-├── `NetEnterprise.Infrastruture/`    ← name preserved from solution
+├── `NetEnterprise.Infrastruture/`    ← nombre preservado tal cual en tu repo
 │   ├── `NetEnterprise.Infrastruture.csproj`
+│   ├── `Authentication/`
+│   │   └── `JwtSettings.cs`
 │   ├── `Persistence/`
 │   │   ├── `AppDbContext.cs`
 │   │   ├── `AppDbContextFactory.cs`
 │   │   ├── `Migrations/`
-│   │   │   └── `20260207222913_PrimerEntidad.cs`
+│   │   │   ├── `20260207222913_PrimerEntidad.cs`
+│   │   │   ├── `20260209202308_Borre_dbmanual_crear_de_nuevo.cs`
+│   │   │   └── `20260209210935_PrimerEntidades.cs`
 │   │   ├── `Configurations/`
 │   │   │   ├── `UserConfiguration.cs`
 │   │   │   ├── `GroupConfiguration.cs`
@@ -90,7 +91,9 @@ src/
 │   │       ├── `RoleSeeder.cs`
 │   │       ├── `CountrySeeder.cs`
 │   │       ├── `IndustryTypeSeeder.cs`
-│   │       └── `AdminUserSeeder.cs`
+│   │       ├── `AdminUserSeeder.cs`
+│   │       ├── `CompanySeeder.cs`
+│   │       └── `BranchSeeder.cs`
 │   ├── `Repositories/`
 │   │   ├── `GenericRepository.cs`
 │   │   ├── `UserRepository.cs`
@@ -113,6 +116,9 @@ src/
 │       │   ├── `SubGroup.cs`
 │       │   ├── `IndustryType.cs`
 │       │   └── `Country.cs`
+│       ├── `Global/`
+│       │   ├── `Country.cs`
+│       │   └── `IndustryType.cs`
 │       ├── `Management/`
 │       │   ├── `Company.cs`
 │       │   └── `Branch.cs`

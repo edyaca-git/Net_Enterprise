@@ -4,25 +4,26 @@ using NetEnterprise.Application.Interfaces.Services;
 using NetEnterprise.Domain.Entities.Security;
 using NetEnterprise.Shared.Common;
 
-namespace NetEnterprise.Application.Services;
-
 public class AuthService : IAuthService
 {
     private readonly IUserRepository _userRepository;
     private readonly IRoleRepository _roleRepository;
     private readonly ICountryRepository _countryRepository;
     private readonly IPasswordHasher _passwordHasher;
+    private readonly ITokenService _tokenService;
 
     public AuthService(
         IUserRepository userRepository,
         IRoleRepository roleRepository,
         ICountryRepository countryRepository,
-        IPasswordHasher passwordHasher)
+        IPasswordHasher passwordHasher,
+        ITokenService tokenService)
     {
         _userRepository = userRepository;
         _roleRepository = roleRepository;
         _countryRepository = countryRepository;
         _passwordHasher = passwordHasher;
+        _tokenService = tokenService;
     }
 
     public async Task<ApiResponse<LoginResponse>> LoginAsync(LoginRequest request)
@@ -80,11 +81,12 @@ public class AuthService : IAuthService
         // Login exitoso
         await _userRepository.ResetFailedLoginAttemptsAsync(user.UserId);
 
-        // Nota: El token se generará en el Controller usando ITokenService
-        // Este servicio solo valida y retorna los datos del usuario
+        //  GENERAR TOKEN AQUÍ EN EL SERVICIO
+        var token = _tokenService.GenerateToken(user);
+
         var response = new LoginResponse
         {
-            Token = string.Empty, // Se establecerá en el controller
+            Token = token,
             UserId = user.UserId,
             UserAccount = user.UserAccount,
             Email = user.Email,
@@ -127,7 +129,7 @@ public class AuthService : IAuthService
         }
 
         // Obtener rol USER por defecto
-        var userRole = await _roleRepository.GetByCodeAsync(request.UserRole);
+        var userRole = await _roleRepository.GetByCodeAsync("USER");
         if (userRole == null)
         {
             return ApiResponse<UserRegisteredResponse>.ErrorResponse(
@@ -137,7 +139,6 @@ public class AuthService : IAuthService
         }
 
         // Crear nuevo usuario
-
         var newUser = new User
         {
             UserAccount = request.UserAccount,
