@@ -8,10 +8,8 @@ src/
 │   ├── `NetEnterprise.Api.csproj`
 │   ├── `Program.cs`
 │   ├── `appsettings.json`
-│   ├── `Properties/`
-│   │   └── `launchSettings.json`
-│   ├── `Middleware/`
-│   │   └── `ExceptionMiddleware.cs`
+│   └── `Middleware/`
+│       └── `ExceptionMiddleware.cs`
 │   └── `Controllers/`
 │       ├── `AuthController.cs`
 │       ├── `GenericController.cs`
@@ -66,10 +64,10 @@ src/
 │           ├── `CreateBranchDto.cs`
 │           └── `UpdateBranchDto.cs`
 │
-├── `NetEnterprise.Infrastruture/`    ← nombre preservado tal cual en tu repo
+├── `NetEnterprise.Infrastruture/`    ← name preserved from repo
 │   ├── `NetEnterprise.Infrastruture.csproj`
-│   ├── `Authentication/`
-│   │   └── `JwtSettings.cs`
+│   ├── `Authentication/` (referenced in Program)
+│   │   └── *(JwtSettings may be in `NetEnterprise.Shared/Settings`)*
 │   ├── `Persistence/`
 │   │   ├── `AppDbContext.cs`
 │   │   ├── `AppDbContextFactory.cs`
@@ -132,8 +130,10 @@ src/
     │   ├── `PagedResult.cs`
     │   ├── `Metadata.cs`
     │   └── `ApiResponse.cs`
-    └── `DTOs/`
-        └── `PaginationDto.cs`
+    ├── `DTOs/`
+    │   └── `PaginationDto.cs`
+    └── `Settings/`
+        └── `JwtSettings.cs`
 ________________________________________
 📋 ÍNDICE DE LA SOLUCIÓN
 1.	Creación de la estructura de proyectos
